@@ -9,7 +9,7 @@ $meta['toclevels']        = array('string', '_pattern' => '/^(|[1-5]-[1-5])$/');
 $meta['headernumber']     = array('onoff');
 $meta['maxbookmarks']     = array('numeric');
 $meta['watermark']        = array('string');
-$meta['template']         = array('dirchoice', '_dir' => DOKU_PLUGIN . 'dw2pdf/tpl/');
+$meta['template']         = array('multichoice', '_choices' => array_keys(\dokuwiki\plugin\dw2pdf\src\TemplateDirectory::all()));
 $meta['output']           = array('multichoice', '_choices' => array('browser', 'file'));
 $meta['usecache']         = array('onoff');
 $meta['usestyles']        = array('string');

@@ -43,10 +43,7 @@ class Template
     {
         $this->name = $config->getTemplateName();
         $this->qrScale = $config->getQRScale();
-        $this->dir = DOKU_PLUGIN . 'dw2pdf/tpl/' . $this->name;
-        if (!is_dir($this->dir)) {
-            throw new \RuntimeException("Template directory $this->dir does not exist");
-        }
+        $this->dir = TemplateDirectory::resolve($this->name);
     }
 
     /**
@@ -145,8 +142,8 @@ class Template
             '@USERNAME@' => hsc($this->context['username'] ?? ''),
             '@BASE@' => DOKU_BASE,
             '@INC@' => DOKU_INC,
-            '@TPLBASE@' => DOKU_BASE . 'lib/plugins/dw2pdf/tpl/' . $this->name . '/',
-            '@TPLINC@' => DOKU_INC . 'lib/plugins/dw2pdf/tpl/' . $this->name . '/',
+            '@TPLBASE@' => TemplateDirectory::assetBase($this->dir),
+            '@TPLINC@' => $this->dir . '/',
             // page dependent placeholders
             '@ID@' => $this->context['id'] ?? '',
             '@UPDATE@' => dformat(filemtime(wikiFN($this->context['id'], $this->context['rev'] ?? ''))),

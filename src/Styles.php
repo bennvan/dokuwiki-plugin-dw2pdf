@@ -60,7 +60,7 @@ class Styles
      */
     protected function getStyleFiles(): array
     {
-        $tpl = $this->config->getTemplateName();
+        $directory = TemplateDirectory::resolve($this->config->getTemplateName());
 
         return array_merge(
             [
@@ -70,7 +70,7 @@ class Styles
             $this->getExtensionStyles(),
             [
                 DOKU_PLUGIN . 'dw2pdf/conf/style.css' => DOKU_BASE . 'lib/plugins/dw2pdf/conf/',
-                DOKU_PLUGIN . 'dw2pdf/tpl/' . $tpl . '/style.css' => DOKU_BASE . 'lib/plugins/dw2pdf/tpl/' . $tpl . '/',
+                $directory . '/style.css' => TemplateDirectory::assetBase($directory),
                 DOKU_PLUGIN . 'dw2pdf/conf/style.local.css' => DOKU_BASE . 'lib/plugins/dw2pdf/conf/',
             ]
         );

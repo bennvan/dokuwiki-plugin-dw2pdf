@@ -5,11 +5,13 @@ namespace dokuwiki\plugin\dw2pdf\src;
 class Cache extends \dokuwiki\Cache\Cache
 {
     protected AbstractCollector $collector;
+    protected string $templateDirectory;
 
     /** @inheritdoc */
     public function __construct(Config $config, AbstractCollector $collector)
     {
         $this->collector = $collector;
+        $this->templateDirectory = TemplateDirectory::resolve($config->getTemplateName());
 
         $pages = $collector->getPages();
         sort($pages);
@@ -17,6 +19,7 @@ class Cache extends \dokuwiki\Cache\Cache
             implode(',', $pages),
             $config->getCacheKey(),
             $collector->getTitle(),
+            $this->templateDirectory,
         ]);
 
         parent::__construct($key, '.dw2.pdf');
@@ -83,6 +86,7 @@ class Cache extends \dokuwiki\Cache\Cache
         // set up the dependencies
         $this->depends['files'] = array_merge(
             $dependencies,
+            TemplateDirectory::dependencies($this->templateDirectory),
             $this->collector->getFiles(),
             getConfigFiles('main')
         );

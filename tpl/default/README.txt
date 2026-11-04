@@ -3,8 +3,24 @@
 Templates define the design of the created PDF files and are a good way
 to easily customize them to your Corporate Identity.
 
-To create a new template, just create a new folder within the plugin's
-''tpl'' folder and put your header, footers and style definitions in it.
+To create a persistent user template, create ''conf/dw2pdf/tpl/mytemplate/''
+(relative to DokuWiki's configuration directory) and put your headers, footers
+and style definitions in it. The plugin's own ''tpl'' folder remains supported.
+User templates take precedence over bundled templates with the same name;
+this replaces the whole template, without inheriting missing files.
+
+Both locations appear in the configuration's template selector. To select a
+template for a single export, add ''&tpl=mytemplate'' to the export URL.
+Template names may contain letters, numbers, underscores, spaces, dots and
+hyphens, but must start with a letter, number or underscore.
+
+Use ''@TPLBASE@logo.png'' or ''@TPLINC@logo.png'' for images in template HTML.
+For user templates, these resolve to local files; do not expose ''conf'' over
+HTTP. Relative ''url(images/logo.png)'' paths in ''style.css'' resolve locally
+too. Template files are data, not executable PHP. Font registration is separate.
+
+Changes to template HTML, CSS and local assets invalidate the PDF cache on the
+next export. Adding or removing a user override also selects a separate cache.
 
 ===== Headers and Footers =====
 
