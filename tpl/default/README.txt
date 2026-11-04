@@ -17,10 +17,51 @@ hyphens, but must start with a letter, number or underscore.
 Use ''@TPLBASE@logo.png'' or ''@TPLINC@logo.png'' for images in template HTML.
 For user templates, these resolve to local files; do not expose ''conf'' over
 HTTP. Relative ''url(images/logo.png)'' paths in ''style.css'' resolve locally
-too. Template files are data, not executable PHP. Font registration is separate.
+too. Template files are data, not executable PHP.
 
 Changes to template HTML, CSS and local assets invalidate the PDF cache on the
 next export. Adding or removing a user override also selects a separate cache.
+
+===== Custom fonts =====
+
+Put static TrueType (''.ttf'') files inside your template, for example in a
+''fonts'' subdirectory. Web fonts (WOFF/WOFF2) and variable fonts must first be
+converted to static TrueType files. Only bundle fonts whose licences permit it.
+
+Register them in ''fonts.json'' alongside ''style.css'':
+
+<code json>
+{
+  "inter": {
+    "R": "fonts/Inter-Regular.ttf",
+    "B": "fonts/Inter-Bold.ttf",
+    "I": "fonts/Inter-Italic.ttf",
+    "BI": "fonts/Inter-BoldItalic.ttf"
+  },
+  "sourcecodepro": {
+    "R": "fonts/SourceCodePro-Regular.ttf"
+  }
+}
+</code>
+
+Family names must be lowercase, start with a letter, and contain only letters,
+numbers, underscores or hyphens. ''R'' (regular) is required; ''B'' (bold), ''I''
+(italic) and ''BI'' (bold italic) are optional. Paths are relative to this
+template and must resolve to files within it. Missing or invalid font files
+fail the export and are reported in the error log rather than silently falling
+back to another font. Existing mPDF fonts remain available.
+
+Then choose fonts in ''style.css'':
+
+<code css>
+body { font-family: inter; }
+pre, code { font-family: sourcecodepro; }
+</code>
+
+Registration does not change the default font by itself. A PDF template can
+choose fonts independently of the browser theme; the browser's ''@font-face''
+rules are not imported. Font metrics are cached separately for each template
+and font revision. Updating local fonts also invalidates the PDF cache.
 
 ===== Headers and Footers =====
 

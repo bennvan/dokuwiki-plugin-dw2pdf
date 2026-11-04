@@ -31,6 +31,9 @@ class DokuMpdf extends Mpdf
     {
         $initConfig = $config->getMPdfConfig();
         $initConfig['mode'] = $this->lang2mode($lang);
+        $initConfig = TemplateFonts::configure(
+            TemplateDirectory::resolve($config->getTemplateName()), $initConfig
+        );
 
         $http = new HttpClient();
 
