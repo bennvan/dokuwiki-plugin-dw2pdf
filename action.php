@@ -10,6 +10,7 @@ use dokuwiki\plugin\dw2pdf\src\CollectorFactory;
 use dokuwiki\plugin\dw2pdf\src\Config;
 use dokuwiki\plugin\dw2pdf\src\ExportException;
 use dokuwiki\plugin\dw2pdf\src\PdfExportService;
+use dokuwiki\plugin\dw2pdf\src\TemplateDirectory;
 use Mpdf\MpdfException;
 
 /**
@@ -33,6 +34,23 @@ class action_plugin_dw2pdf extends ActionPlugin
     {
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'convert');
         $controller->register_hook('MENU_ITEMS_ASSEMBLY', 'AFTER', $this, 'addsvgbutton');
+        $controller->register_hook('DOKUWIKI_STARTED', 'AFTER', $this, 'exportTemplates');
+    }
+
+    /** Expose template names for the chooser, never private filesystem paths. */
+    public function exportTemplates(Event $event): void
+    {
+        global $JSINFO;
+        $templates = array_keys(TemplateDirectory::all());
+        if (count($templates) < 2) return;
+        $JSINFO['plugins']['dw2pdf'] = [
+            'templates' => $templates,
+            'defaultTemplate' => $this->getConf('template'),
+            'title' => $this->getLang('export_pdf_button'),
+            'label' => $this->getLang('template_label'),
+            'export' => $this->getLang('export_confirm'),
+            'cancel' => $this->getLang('export_cancel'),
+        ];
     }
 
     /**

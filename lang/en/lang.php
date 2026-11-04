@@ -1,6 +1,9 @@
 <?php
 
 $lang['export_pdf_button'] = "Export to PDF";
+$lang['template_label']    = 'PDF template';
+$lang['export_confirm']    = 'Export';
+$lang['export_cancel']     = 'Cancel';
 $lang['needtitle']         = "Please provide a title.";
 $lang['needns']            = "Please provide an existing namespace.";
 $lang['notexist']          = "Requested page doesn't exist.";

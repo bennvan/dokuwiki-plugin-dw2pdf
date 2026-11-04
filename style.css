@@ -26,3 +26,23 @@
 [dir=rtl] #dokuwiki__pagetools ul li a.export_pdf:focus {
     background-position: left -45px;
 }
+
+/* Use DokuWiki's dialog widget, with optional Bootstrap button styling. */
+.ui-dialog.dw2pdf-export-dialog {
+    z-index: 11000;
+    max-width: calc(100vw - 32px);
+    box-sizing: border-box;
+}
+#dw2pdf-template-dialog label {
+    display: block;
+    margin-bottom: .5em;
+}
+#dw2pdf-template-dialog select {
+    width: 100%;
+    box-sizing: border-box;
+    font: inherit;
+}
+.dw2pdf-export-dialog .ui-dialog-buttonset {
+    display: flex;
+    gap: .5em;
+}

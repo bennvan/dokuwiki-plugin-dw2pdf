@@ -11,6 +11,12 @@ this replaces the whole template, without inheriting missing files.
 
 Both locations appear in the configuration's template selector. To select a
 template for a single export, add ''&tpl=mytemplate'' to the export URL.
+When more than one template is available, clicking a normal page or namespace
+PDF export link opens a template chooser with the configured default selected.
+Links that already specify ''tpl'', modified clicks and direct export URLs keep
+their existing behaviour. With one template, or without JavaScript, export is
+direct. Reload the wiki page after adding or removing templates to refresh the
+available choices. BookCreator's background export is not intercepted.
 Template names may contain letters, numbers, underscores, spaces, dots and
 hyphens, but must start with a letter, number or underscore.
 
